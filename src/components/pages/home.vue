@@ -31,8 +31,7 @@
               </v-layout>
             </v-col>
           </v-row>
-          <v-row no-gutters align="center"
-                 justify="center">
+          <v-row no-gutters align="center" justify="center">
             <v-col cols="12" sm="12">
               <!-- <v-card class="pa-2" outlined tile> -->
               <form action="/search">
@@ -57,15 +56,6 @@
                       </v-flex>
                     </v-layout>
                   </v-flex>
-                  <v-flex xs2>
-                  </v-flex>
-                  <v-flex xs4>
-                  </v-flex>
-                  <v-flex xs4>
-                    <!--                    <v-btn block type="submit">Search</v-btn>-->
-                  </v-flex>
-                  <v-flex xs4>
-                  </v-flex>
                 </v-layout>
               </form>
               <!-- </v-card> -->
@@ -82,7 +72,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'App',
-
   data: () => ({
     //
   }),

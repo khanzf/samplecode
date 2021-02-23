@@ -129,16 +129,14 @@ export default Vue.extend({
       activities: [
         {
           cc: ['https://islamicate.space/users/fikran/followers'],
-          id:
-              'https://islamicate.space/objects/f73c4420-04e1-4eca-9872-b034dc8bd886',
+          id: 'https://islamicate.space/objects/f73c4420-04e1-4eca-9872-b034dc8bd886',
           to: ['https://www.w3.org/ns/activitystreams#Public'],
           tag: [],
           type: 'Note',
           actor: 'https://islamicate.space/users/fikran',
           source: 'Sleepy...',
           content: 'Sleepy...',
-          context:
-              'https://islamicate.space/contexts/9cebd7a4-0093-449d-ae6f-80981055be63',
+          context: 'https://islamicate.space/contexts/9cebd7a4-0093-449d-ae6f-80981055be63',
           summary: '',
           '@context': [
             'https://www.w3.org/ns/activitystreams',
