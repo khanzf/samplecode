@@ -7,8 +7,7 @@
               alt="Vuetify Name"
               class="shrink mt-1 hidden-sm-and-down"
               contain
-              min-width="100"
-              src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+              src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light-text.svg"
               width="100"
           />
         </v-flex>
@@ -34,15 +33,16 @@
         </v-flex>
       </v-layout>
     </v-app-bar>
-    <v-card class="mx-auto mt-4" max-width="90%">
-      <v-list two-line>
+
+    <v-container class="mx-auto mt-4">
+      <span>About {{ dataJson.requestdata.total_results.toLocaleString() }} results</span>
+      <v-list three-line>
         <v-list-item-group>
-          <template v-for="(item, index) in items">
+          <template v-for="(item, index) in dataJson.activities">
             <v-list-item :key="item.title">
               <template>
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.title"></v-list-item-title>
-
+                  <v-list-item-title v-text="item.source"></v-list-item-title>
                   <v-list-item-subtitle
                       class="text--primary"
                       v-text="item.headline"
@@ -57,21 +57,24 @@
                   <!-- <v-list-item-action-text
                     v-text="item.action"
                   ></v-list-item-action-text> -->
-
                   <!-- <v-icon v-if="!active" color="grey lighten-1">
                     mdi-star-outline
                   </v-icon>
-
                   <v-icon v-else color="yellow darken-3"> mdi-star </v-icon> -->
                 </v-list-item-action>
               </template>
             </v-list-item>
-
             <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
           </template>
         </v-list-item-group>
       </v-list>
-    </v-card>
+      <div class="text-center">
+        <v-btn class="primary">
+          Load More
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </div>
+    </v-container>
   </div>
   <!-- <div>{{ $router.currentRoute.query }}</div> -->
 </template>
