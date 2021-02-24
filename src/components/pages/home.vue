@@ -4,66 +4,53 @@
       <v-flex class="px-4">
         <v-switch v-model="$vuetify.theme.dark"
                   @change="setTheme"
-                  inset
                   class="float-right"
                   label="Dark Mode"
                   persistent-hint>
         </v-switch>
       </v-flex>
     </v-layout>
-    <v-layout>
-      <v-flex>
-        <v-container align="center">
-          <v-row no-gutters align="center"
-                 justify="center">
-            <v-col cols="12" sm="12">
-              <v-layout>
-                <v-flex xs4></v-flex>
-                <v-flex xs4 justify-center>
-                  <div>
-                    <v-img alt="Vue logo"
-                           contain height="150"
-                           src="../../assets/logo.png"></v-img>
-                  </div>
+    <form action="/search">
+      <v-container align="center">
+        <v-row no-gutters align="center"
+               justify="center">
+          <v-col cols="12" sm="12">
+            <v-layout>
+              <v-flex xs4></v-flex>
+              <v-flex xs4 justify-center>
+                <div>
+                  <v-img alt="Vue logo"
+                         contain height="150"
+                         src="../../assets/logo.png"></v-img>
+                </div>
+              </v-flex>
+              <v-flex xs4></v-flex>
+            </v-layout>
+          </v-col>
+        </v-row>
+        <!-- <v-card class="pa-2" outlined tile> -->
 
-                </v-flex>
-                <v-flex xs4></v-flex>
-              </v-layout>
-            </v-col>
-          </v-row>
-          <v-row no-gutters align="center" justify="center">
-            <v-col cols="12" sm="12">
-              <!-- <v-card class="pa-2" outlined tile> -->
-              <form action="/search">
-                <v-layout row wrap align-center>
-                  <v-flex xs2>
-                  </v-flex>
-                  <v-flex xs8 class="search-div">
-                    <v-layout row>
-                      <v-flex xs10 class="input-field">
-                        <v-icon class="icon">mdi-magnify</v-icon>
-                        <v-text-field
-                            class="mt-4 pt-4 input"
-                            required
-                            name="keyword"
-                            rounded
-                            clearable
-                            placeholder="Search the Fediverse"
-                        ></v-text-field>
-                      </v-flex>
-                      <v-flex xs2>
-                        <v-btn type="submit" class="search-btn">Search</v-btn>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-layout>
-              </form>
-              <!-- </v-card> -->
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-flex>
-    </v-layout>
+        <v-flex xs12 class="search-div mx-auto">
+          <v-layout row wrap>
+            <v-flex xs9 class="input-field">
+              <v-text-field
+                  class="text-center"
+                  prepend-inner-icon="mdi-magnify"
+                  required
+                  name="keyword"
+                  rounded
+                  clearable
+                  placeholder="Search the Fediverse"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs3>
+              <v-btn type="submit" class="search-btn">Search</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <!-- </v-card> -->
+      </v-container>
+    </form>
   </div>
 </template>
 
@@ -87,44 +74,46 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
+@media screen and (min-width: 1150px) {
+  .search-div {
+    width: 60% !important;
+  }
+}
+
 .search-div {
   display: flex;
-  width: 100%;
   border-radius: 34px;
   overflow: hidden;
+  width: 100%;
 }
 
 .search-div .input-field {
-  flex-grow: 1;
-  display: flex;
   background: #e0e0e03b;
 }
 
-.search-div .input-field .icon {
-  min-width: 80px;
-  display: flex;
-}
-
-.search-div .input-field .input {
-  height: 100%;
-  background: transparent;
-  border: 0;
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #000;
-}
-
 .search-btn {
+  display: flex;
   height: 100% !important;
   width: 100%;
-  white-space: nowrap;
   font-size: 16px;
   color: #fff !important;
   border: 0;
   cursor: pointer;
-  position: relative;
-  z-index: 0;
+  padding-left: 0 !important;
   background: #009451 !important;
+}
+
+</style>
+<style>
+.v-text-field--rounded > .v-input__control > .v-input__slot {
+  padding-right: 6px !important;
+}
+
+.text-field--display .v-text-field--rounded > .v-input__control > .v-input__slot {
+  padding: 0px 6px !important;
+}
+
+.text-field--display .v-text-field--outlined.v-input--dense.v-text-field--single-line > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense.v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: 10px;
 }
 </style>

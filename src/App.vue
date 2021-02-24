@@ -28,6 +28,39 @@
     <v-main>
       <router-view/>
     </v-main>
+    <v-footer app fixed padless>
+      <v-card class="flex" flat tile color="#f2f2f2">
+        <v-card-title>
+          <strong class="text-body-1 grey--text">Pakistan</strong>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-flex xs12>
+            <v-layout wrap row>
+              <v-flex class="text-left">
+                <a class="pa-4">
+                  About
+                </a>
+                <a class="pa-4">
+                  Privacy
+                </a>
+              </v-flex>
+              <!--              <v-flex class="text-right">-->
+              <!--                <a class="pa-4">-->
+              <!--                  Privacy-->
+              <!--                </a>-->
+              <!--                <a class="pa-4">-->
+              <!--                  Privacy-->
+              <!--                </a>-->
+              <!--                <a class="pa-4">-->
+              <!--                  Privacy-->
+              <!--                </a>-->
+              <!--              </v-flex>-->
+            </v-layout>
+          </v-flex>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
