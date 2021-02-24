@@ -3,6 +3,7 @@
     <v-app-bar app flat>
       <v-layout class="pt-6">
         <v-flex xs2>
+          <router-link to="/">
           <v-img
               alt="Vuetify Name"
               class="shrink mt-1 hidden-sm-and-down"
@@ -10,17 +11,21 @@
               src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light-text.svg"
               width="100"
           />
+          </router-link>
         </v-flex>
         <v-flex xs8>
+          <form action="/search">
           <v-text-field
               required
               prepend-inner-icon="mdi-magnify"
               solo name="keyword"
+              :value="$router.currentRoute.query.keyword"
               rounded
               outlined
               dense clearable
               placeholder="Search the Fediverse"
           ></v-text-field>
+          </form>
         </v-flex>
         <v-flex xs2 class="pt-2">
           <v-switch v-model="$vuetify.theme.dark"
