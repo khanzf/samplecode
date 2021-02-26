@@ -30,8 +30,21 @@
     </v-main>
     <v-footer app absolute>
       <v-card class="flex" outlined raised rounded>
-        <v-card-title class="pa-2">
-          <strong class="caption grey--text">Pakistan</strong>
+        <v-card-title class="pa-2 text-right">
+          <v-layout wrap class="mx-auto">
+            <v-flex xs12 class="text-center">
+              <v-img
+                  alt="Vuetify Name"
+                  contain
+                  height="35"
+                  src="./assets/logo.png"
+              />
+              <div class="text--primary text-body-2">
+                Carbon Neutral Since 2007
+              </div>
+            </v-flex>
+          </v-layout>
+
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
@@ -39,10 +52,16 @@
             <v-layout wrap row>
               <v-flex class="text-left">
                 <a class="pa-4">
-                  About
+                  Information
                 </a>
                 <a class="pa-4">
-                  Privacy
+                  Version
+                </a>
+                <a class="pa-4">
+                  Source
+                </a>
+                <a class="pa-4">
+                  Contact
                 </a>
               </v-flex>
             </v-layout>

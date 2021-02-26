@@ -7,6 +7,9 @@ import router from './router';
 
 import vuetify from './plugins/vuetify';
 
+import timeAgo from './filters/timeAgo';
+
+Vue.filter('timeAgo', timeAgo);
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false;

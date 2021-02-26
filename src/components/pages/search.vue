@@ -92,17 +92,17 @@
                     </v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.actor.name"></v-list-item-title>
-                    <v-list-item-subtitle
-                        class="text--primary"
-                        v-text="item.actor.preferredUsername"
-                    ></v-list-item-subtitle>
+                    <v-list-item-title>{{ item.actor.name }}
+                      <span>
+                        <a :href="item.actor.id"> {{ item.actor.preferredUsername }}</a>
+                      </span>
+                    </v-list-item-title>
                     <v-list-item-subtitle
                         v-text="item.content"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
-                    <v-list-item-action-text v-text="'15 min'"></v-list-item-action-text>
+                    <v-list-item-action-text>{{ item.published  | timeAgo }}</v-list-item-action-text>
                   </v-list-item-action>
                 </template>
               </v-list-item>
