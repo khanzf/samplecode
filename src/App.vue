@@ -45,17 +45,6 @@
                   Privacy
                 </a>
               </v-flex>
-              <!--              <v-flex class="text-right">-->
-              <!--                <a class="pa-4">-->
-              <!--                  Privacy-->
-              <!--                </a>-->
-              <!--                <a class="pa-4">-->
-              <!--                  Privacy-->
-              <!--                </a>-->
-              <!--                <a class="pa-4">-->
-              <!--                  Privacy-->
-              <!--                </a>-->
-              <!--              </v-flex>-->
             </v-layout>
           </v-flex>
         </v-card-text>
