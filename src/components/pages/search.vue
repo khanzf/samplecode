@@ -26,7 +26,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex sm3 xs12 v-else>
+        <v-flex sm2 xs12 v-else>
           <router-link to="/">
             <v-img
                 alt="Vuetify Name"
@@ -37,7 +37,7 @@
             />
           </router-link>
         </v-flex>
-        <v-flex :class="isMobile() ? 'sm12 xs12': 'sm7 xs12'" class="text-field--display">
+        <v-flex :class="isMobile() ? 'sm12 xs12': 'sm8 xs12'" class="text-field--display">
           <form action="/search">
             <v-text-field
                 required
@@ -61,16 +61,35 @@
         </v-flex>
       </v-layout>
     </v-app-bar>
-    <v-layout class="mx-auto">
+    <v-layout wrap>
       <v-container>
         <span>About {{ dataJson.requestdata.total_results.toLocaleString() }} results</span>
         <v-list three-line>
           <v-list-item-group>
-            <template v-for="(item, index) in dataJson.activities">
+            <v-skeleton-loader
+                v-if="isLoading"
+                v-bind="attrs"
+                light
+                type="list-item-avatar-three-line"
+            ></v-skeleton-loader>
+            <template v-for="(item, index) in dataJson.activities" v-if="!isLoading">
               <v-list-item :key="item.title">
                 <template>
                   <v-list-item-avatar>
-                    <v-img :src="item.actor.icon.url"></v-img>
+                    <v-img :src="item.actor.icon.url">
+                      <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
+                        >
+                          <v-progress-circular
+                              indeterminate
+                              color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.actor.name"></v-list-item-title>
@@ -91,15 +110,12 @@
             </template>
           </v-list-item-group>
         </v-list>
-        <div class="text-center">
-          <v-btn class="primary">
-            Load More
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </div>
+        <v-btn class="primary" text>
+          Load More
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-container>
     </v-layout>
-
   </div>
   <!-- <div>{{ $router.currentRoute.query }}</div> -->
 </template>
@@ -112,6 +128,12 @@ export default Vue.extend({
 
   data: () => ({
     selected: [2],
+    attrs: {
+      class: 'mb-6',
+      boilerplate: true,
+      elevation: 2,
+    },
+    isLoading: true,
     items: [
       {
         action: '15 min',
@@ -371,811 +393,6 @@ export default Vue.extend({
           ],
           type: 'Note'
         },
-
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-        {
-          '@context': [
-            'https://www.w3.org/ns/activitystreams',
-            'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-            {
-              '@language': 'und'
-            }
-          ],
-          actor: {
-            id: 'https://social.farhan.codes/users/testacct555',
-            tag: [],
-            url: 'https://social.farhan.codes/users/testacct555',
-            icon: {
-              url: 'https://social.farhan.codes/media/dafd1ad4381133a946d9ad3c5ca1acb21a1986f49bb4ef25650b87457bc8eed0.jpg',
-              type: 'Image'
-            },
-            name: 'testacct555',
-            type: 'Person',
-            image: {
-              url: 'https://social.farhan.codes/media/fa21afc8dd8a9c9607466d62bce6c90eb2110b34b04a4c0d81d1f2c28263272b.jpeg',
-              type: 'Image'
-            },
-            inbox: 'https://social.farhan.codes/users/testacct555/inbox',
-            outbox: 'https://social.farhan.codes/users/testacct555/outbox',
-            summary: 'profile',
-            '@context': [
-              'https://www.w3.org/ns/activitystreams',
-              'https://social.farhan.codes/schemas/litepub-0.1.jsonld',
-              {
-                '@language': 'und'
-              }
-            ],
-            endpoints: {
-              sharedInbox: 'https://social.farhan.codes/inbox',
-              uploadMedia: 'https://social.farhan.codes/api/ap/upload_media',
-              oauthTokenEndpoint: 'https://social.farhan.codes/oauth/token',
-              oauthRegistrationEndpoint: 'https://social.farhan.codes/api/v1/apps',
-              oauthAuthorizationEndpoint: 'https://social.farhan.codes/oauth/authorize'
-            },
-            followers: 'https://social.farhan.codes/users/testacct555/followers',
-            following: 'https://social.farhan.codes/users/testacct555/following',
-            publicKey: {
-              id: 'https://social.farhan.codes/users/testacct555#main-key',
-              owner: 'https://social.farhan.codes/users/testacct555',
-              publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBPbYwLkmD0TilWtf6iM\nOCOoXTl/nPGCh+BKCLdSj6swSyT8AN0DiQlruTE7zi3MHsinIKeS3hBMd22l2XUW\nENK0q++4MxLjG4ROgFbLnIYFc4/862OuGv8zkdNVHgk5ij6fc1whwbecU9NsSfDh\nBkClK0aB8h5nAxtJNjdB6s54tuKlhZrMsar6Szl9e6wjngDGKPuPAp9R3lpjmi0C\nOfgOpKBKukF3ilzHatRr/XDlG9iEtGbeJrlGfbZL74l5YHttFLbT1L4RliK42lqV\nG0dAary7KyyVNW7yeNC4B8wi0eh/OThhCtJMEmLy5KroDg/VAFOXojNA4jOV/cG6\nAQIDAQAB\n-----END PUBLIC KEY-----\n\n'
-            },
-            attachment: [],
-            capabilities: {
-              acceptsChatMessages: true
-            },
-            discoverable: false,
-            preferredUsername: 'testacct555',
-            manuallyApprovesFollowers: false
-          },
-          attachment: [],
-          attributedTo: 'https://social.farhan.codes/users/testacct555',
-          cc: [
-            'https://social.farhan.codes/users/testacct555/followers'
-          ],
-          content: 'linux 2',
-          context: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          conversation: 'https://social.farhan.codes/contexts/f01a77c7-064f-44d1-9a19-2de91031c8e5',
-          id: 'https://social.farhan.codes/objects/4461fbb5-03f2-4773-aac4-9d8880cce369',
-          published: '2021-02-26T01:45:48.940606Z',
-          sensitive: false,
-          source: 'linux 2',
-          summary: '',
-          tag: [],
-          to: [
-            'https://www.w3.org/ns/activitystreams#Public'
-          ],
-          type: 'Note'
-        },
-
       ],
     },
   }),
@@ -1195,10 +412,19 @@ export default Vue.extend({
       }
     },
   },
+  created() {
+    setInterval(() => {
+      this.isLoading = false;
+    }, 1000);
+  }
 });
 </script>
 
 <style scoped>
+.loadMore-btn {
+  bottom: 90px;
+}
+
 /*@media only screen and (min-width: 1150px) {*/
 /*  .side-logo {*/
 /*    text-align: -webkit-left !important;*/

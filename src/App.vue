@@ -28,8 +28,8 @@
     <v-main>
       <router-view/>
     </v-main>
-    <v-footer inset app absolute>
-      <v-card class="mx-auto flex" outlined raised rounded>
+    <v-footer app absolute>
+      <v-card class="flex" outlined raised rounded>
         <v-card-title class="pa-2">
           <strong class="caption grey--text">Pakistan</strong>
         </v-card-title>

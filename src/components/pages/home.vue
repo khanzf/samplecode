@@ -73,7 +73,7 @@ export default Vue.extend({
   },
 });
 </script>
-<style scoped>
+<style>
 @media screen and (min-width: 1150px) {
   .search-div {
     width: 60% !important;
