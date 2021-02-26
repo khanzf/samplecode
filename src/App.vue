@@ -28,10 +28,10 @@
     <v-main>
       <router-view/>
     </v-main>
-    <v-footer app fixed padless>
-      <v-card class="flex" flat tile color="#f2f2f2">
-        <v-card-title>
-          <strong class="text-body-1 grey--text">Pakistan</strong>
+    <v-footer inset app absolute>
+      <v-card class="mx-auto flex" outlined raised rounded>
+        <v-card-title class="pa-2">
+          <strong class="caption grey--text">Pakistan</strong>
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
