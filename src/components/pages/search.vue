@@ -74,7 +74,7 @@
                     placeholder="Search the Fediverse"
                 >
                   <template v-slot:append-outer>
-                    <v-btn icon large text @click="getSearchResult({isLoadMore: false})">
+                    <v-btn icon large text type="submit">
                       <v-icon large color="white">mdi-magnify</v-icon>
                     </v-btn>
                   </template>
@@ -156,7 +156,7 @@
         <div v-if="toggleMessage">
           <h3>No additional search results.</h3>
         </div>
-        <v-btn class="primary" @click="getSearchResult({lastId: items.requestdata.lastid, isLoadMore: true})" text
+        <v-btn :loading="isLoading" class="primary" @click="getSearchResult({lastId: items.requestdata.lastid, isLoadMore: true})" text
                v-if="items.requestdata.lastid">
           More posts
           <v-icon>mdi-plus</v-icon>
@@ -953,7 +953,7 @@ export default Vue.extend({
       }
       this.$forceUpdate();
     },
-    getSearchResult(event) {
+    getSearchResult(event:any) {
       this.isLoading = true;
       let lastIdQuery = '';
       this.isLoadMore = event.isLoadMore;
