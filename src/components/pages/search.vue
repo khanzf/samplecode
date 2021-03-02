@@ -991,22 +991,3 @@ export default Vue.extend({
   }
 });
 </script>
-
-<style>
-.search-keyword-field {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.search-keyword-field .v-input__control .v-input__slot {
-  min-height: 49px !important;
-}
-
-.search-keyword-field .v-input__append-outer {
-  margin: 0 !important;
-  background-color: green;
-  padding: 3px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-</style>
