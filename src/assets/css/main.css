@@ -1,0 +1,41 @@
+
+.search-div {
+    display: flex;
+    border-radius: 34px;
+    overflow: hidden;
+    width: 100%;
+}
+
+@media screen and (min-width: 1150px) {
+    .search-div {
+        width: 60% !important;
+    }
+}
+
+.search-div .input-field {
+    background: #e0e0e03b;
+}
+
+.search-btn {
+    display: flex;
+    height: 100% !important;
+    width: 100%;
+    font-size: 16px;
+    color: #fff !important;
+    border: 0;
+    cursor: pointer;
+    padding-left: 0 !important;
+    background: #009451 !important;
+}
+
+.v-text-field--rounded > .v-input__control > .v-input__slot {
+    padding-right: 6px !important;
+}
+
+.text-field--display .v-text-field--rounded > .v-input__control > .v-input__slot {
+    padding: 0px 6px !important;
+}
+
+.text-field--display .v-text-field--outlined.v-input--dense.v-text-field--single-line > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense.v-text-field--outlined > .v-input__control > .v-input__slot {
+    min-height: 10px;
+}

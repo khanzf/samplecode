@@ -37,11 +37,8 @@
                   alt="Vuetify Name"
                   contain
                   height="35"
-                  src="./assets/logo.png"
+                  src="./assets/logo_header.svg"
               />
-              <div class="text--primary text-body-2">
-                Carbon Neutral Since 2007
-              </div>
             </v-flex>
           </v-layout>
 
