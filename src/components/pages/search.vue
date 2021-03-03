@@ -93,76 +93,111 @@
         </v-flex>
       </v-layout>
     </v-app-bar>
-    <v-layout wrap>
-      <v-container>
-        <span v-if="items.activities">About {{ items.requestdata.total_results.toLocaleString() }} results</span>
-        <div v-if="items.activities">
-          <v-list three-line v-if="items.activities.length">
-            <v-list-item-group>
-              <!--            <v-skeleton-loader-->
-              <!--                v-if="isLoading"-->
-              <!--                v-bind="attrs"-->
-              <!--                row="6"-->
-              <!--                light-->
-              <!--                type="list-item-avatar-three-line"-->
-              <!--            ></v-skeleton-loader>-->
-              <!--            v-if="!isLoading"-->
-              <template v-for="(item, index) in items.activities">
-                <v-list-item :key="item.title">
-                  <template>
-                    <v-list-item-avatar>
-                      <v-img v-if="item.actor && item.actor.icon && item.actor.icon.url" :src="item.actor.icon.url"
-                             contain
-                             transition="slide-y-transition"
-                             lazy-src="@/assets/logo.png">
-                        <template v-slot:placeholder>
-                          <v-row
-                              class="fill-height ma-0"
-                              align="center"
-                              justify="center"
-                          >
-                            <v-progress-circular
-                                indeterminate
-                                color="grey lighten-5"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img>
-                      <img v-else src="@/assets/noimage.png"/>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ item.actor.name }}
-                        <span>
+    <v-flex sm12 xs12>
+      <v-layout wrap>
+        <v-flex sm8 xs12>
+          <v-container>
+            <span v-if="items.activities">About {{ items.requestdata.total_results.toLocaleString() }} results</span>
+            <div v-if="items.activities">
+              <v-list three-line v-if="items.activities.length">
+                <v-list-item-group>
+                  <!--            <v-skeleton-loader-->
+                  <!--                v-if="isLoading"-->
+                  <!--                v-bind="attrs"-->
+                  <!--                row="6"-->
+                  <!--                light-->
+                  <!--                type="list-item-avatar-three-line"-->
+                  <!--            ></v-skeleton-loader>-->
+                  <!--            v-if="!isLoading"-->
+                  <template v-for="(item, index) in items.activities">
+                    <v-list-item :key="item.title">
+                      <template>
+                        <v-list-item-avatar>
+                          <v-img v-if="item.actor && item.actor.icon && item.actor.icon.url" :src="item.actor.icon.url"
+                                 contain
+                                 transition="slide-y-transition"
+                                 lazy-src="@/assets/logo.png">
+                            <template v-slot:placeholder>
+                              <v-row
+                                  class="fill-height ma-0"
+                                  align="center"
+                                  justify="center"
+                              >
+                                <v-progress-circular
+                                    indeterminate
+                                    color="grey lighten-5"
+                                ></v-progress-circular>
+                              </v-row>
+                            </template>
+                          </v-img>
+                          <img v-else src="@/assets/noimage.png"/>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                          <v-list-item-title>{{ item.actor.name }}
+                            <span>
                         <a :href="item.actor.id"> {{ item.actor.preferredUsername }}</a>
                       </span>
-                      </v-list-item-title>
-                      <v-list-item-subtitle
-                          v-html="item.content"
-                      ></v-list-item-subtitle>
+                          </v-list-item-title>
+                          <v-list-item-subtitle
+                              v-html="item.content"
+                          ></v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-list-item-action-text>{{ item.published  | timeAgo }}</v-list-item-action-text>
+                        </v-list-item-action>
+                      </template>
+                    </v-list-item>
+                    <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
+                  </template>
+                </v-list-item-group>
+              </v-list>
+            </div>
+            <div v-else>
+              <h3>No results across the known fediverse.</h3>
+            </div>
+            <div v-if="toggleMessage">
+              <h3>No additional search results.</h3>
+            </div>
+            <v-btn :loading="isLoading" class="primary"
+                   @click="getSearchResult({lastId: items.requestdata.lastid, isLoadMore: true})" text
+                   v-if="items.requestdata.lastid">
+              More posts
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-container>
+        </v-flex>
+        <v-flex sm4 xs12 class="pa-2" v-if="!isMobile()">
+          <v-card rounded class="mx-auto">
+            <v-card-title class="px-2 py-0 font-weight-bold text-h5">Trends For you</v-card-title>
+            <v-card-text class="pa-0">
+              <v-list>
+                <template v-for="(item,index) in 10">
+                  <v-divider :key="index"></v-divider>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <div class="grey--text caption">Politics Trending</div>
+                      <v-list-item-title class="font-weight-bold">#SenateElection2021</v-list-item-title>
+                      <v-list-item-subtitle class="caption">44.9K Tweets</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
-                      <v-list-item-action-text>{{ item.published  | timeAgo }}</v-list-item-action-text>
+                      <v-menu :close-on-content-click="true">
+                        <template v-slot:activator="{on:menu}">
+                          <v-btn class="grey--text mr-2" icon
+                                 slot="activator" text v-on="menu"
+                                 x-small>
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-menu>
                     </v-list-item-action>
-                  </template>
-                </v-list-item>
-                <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
-              </template>
-            </v-list-item-group>
-          </v-list>
-        </div>
-        <div v-else>
-          <h3>No results across the known fediverse.</h3>
-        </div>
-        <div v-if="toggleMessage">
-          <h3>No additional search results.</h3>
-        </div>
-        <v-btn :loading="isLoading" class="primary" @click="getSearchResult({lastId: items.requestdata.lastid, isLoadMore: true})" text
-               v-if="items.requestdata.lastid">
-          More posts
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-container>
-    </v-layout>
+                  </v-list-item>
+                </template>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-flex>
   </div>
   <!-- <div>{{ $router.currentRoute.query }}</div> -->
 </template>
@@ -953,7 +988,7 @@ export default Vue.extend({
       }
       this.$forceUpdate();
     },
-    getSearchResult(event:any) {
+    getSearchResult(event: any) {
       this.isLoading = true;
       let lastIdQuery = '';
       this.isLoadMore = event.isLoadMore;
