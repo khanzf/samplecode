@@ -95,11 +95,43 @@
     </v-app-bar>
     <v-flex sm12 xs12>
       <v-layout wrap>
-        <v-flex sm8 xs12>
+        <v-flex sm3 xs12 class="pa-1" v-if="!isMobile()">
+          <v-card rounded class="mx-3 my-5">
+            <v-card-title class="px-2 py-0 font-weight-bold text-h6">Trends For you</v-card-title>
+            <v-card-text class="pa-0">
+              <v-list>
+                <template v-for="(item,index) in 10">
+                  <v-divider :key="index"></v-divider>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <div class="grey--text caption">Politics Trending</div>
+                      <v-list-item-title class="font-weight-bold">#SenateElection2021</v-list-item-title>
+                      <v-list-item-subtitle class="caption">44.9K Tweets</v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-list-item-action>
+                      <v-menu :close-on-content-click="true">
+                        <template v-slot:activator="{on:menu}">
+                          <v-btn class="grey--text mr-2" icon
+                                 slot="activator" text v-on="menu"
+                                 x-small>
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-menu>
+                    </v-list-item-action>
+                  </v-list-item>
+                </template>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex sm6 xs12>
           <v-container>
-            <span v-if="items.activities">About {{ items.requestdata.total_results.toLocaleString() }} results</span>
+            <span v-if="items.activities" class="font-weight-bold">About {{
+                items.requestdata.total_results.toLocaleString()
+              }} results</span>
             <div v-if="items.activities">
-              <v-list three-line v-if="items.activities.length">
+              <v-list class="my-2" three-line v-if="items.activities.length">
                 <v-list-item-group>
                   <!--            <v-skeleton-loader-->
                   <!--                v-if="isLoading"-->
@@ -166,9 +198,9 @@
             </v-btn>
           </v-container>
         </v-flex>
-        <v-flex sm4 xs12 class="pa-2" v-if="!isMobile()">
-          <v-card rounded class="mx-auto">
-            <v-card-title class="px-2 py-0 font-weight-bold text-h5">Trends For you</v-card-title>
+        <v-flex sm3 xs12 class="pa-1" v-if="!isMobile()">
+          <v-card rounded class="mx-3 my-5">
+            <v-card-title class="px-2 py-0 font-weight-bold text-h6">Trends For you</v-card-title>
             <v-card-text class="pa-0">
               <v-list>
                 <template v-for="(item,index) in 10">

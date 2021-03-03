@@ -92,10 +92,5 @@ export default Vue.extend({
 
 <style scoped>
 /* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: black;
-    color: white;
-  }
-}
+
 </style>
