@@ -84,7 +84,7 @@
           </v-layout>
         </v-flex>
         <v-flex sm2 xs12 v-if="!isMobile()" class="pa-2">
-          <v-switch v-model="$vuetify.theme.dark"
+          <v-switch v-model="$vuetify.theme.dark" dense inset
                     @change="setTheme"
                     class="float-right"
                     label="Dark Mode"

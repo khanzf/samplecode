@@ -5,6 +5,7 @@
         <v-switch v-model="$vuetify.theme.dark"
                   @change="setTheme"
                   class="float-right"
+                  dense inset
                   label="Dark Mode"
                   persistent-hint>
         </v-switch>
@@ -42,7 +43,7 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs3>
-              <v-btn type="submit" class="search-btn">Search</v-btn>
+              <v-btn type="submit" class="search-btn success">Search</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
