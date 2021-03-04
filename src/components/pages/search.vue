@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app dense fixed prominent>
+    <v-app-bar app dense fixed prominent elevation="2">
       <v-layout :row="isMobile()" class="ma-auto pt-2">
         <v-flex xs12 v-if="isMobile()" class="pt-2 mb-4">
           <v-layout row>
@@ -127,9 +127,8 @@
         </v-flex>
         <v-flex sm6 xs12>
           <v-container>
-            <span v-if="items.activities" class="font-weight-bold">About {{
-                items.requestdata.total_results.toLocaleString()
-              }} results</span>
+            <span v-if="items.activities" class="font-weight-bold">About
+              {{ items.requestdata.total_results.toLocaleString() }} results</span>
             <div v-if="items.activities">
               <v-list class="my-2" three-line v-if="items.activities.length">
                 <v-list-item-group>
