@@ -68,6 +68,8 @@
                     prepend-inner-icon="mdi-magnify"
                     name="keyword"
                     solo
+                    single-line
+                    hide-details
                     outlined
                     :value="$router.currentRoute.query.keyword"
                     clearable
