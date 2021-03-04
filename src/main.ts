@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
-
+import axios from 'axios';
 /// user defined routes
 import router from './router';
 
@@ -13,7 +13,12 @@ Vue.filter('timeAgo', timeAgo);
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
+const axiosConfig = {
+  baseURL: process.env.VUE_APP_BASE_URL,
+  timeout: 30000,
+};
 
+Vue.prototype.$axios = axios.create(axiosConfig);
 new Vue({
   router,
   vuetify,

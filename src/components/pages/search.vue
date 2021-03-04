@@ -1019,23 +1019,24 @@ export default Vue.extend({
       }
       this.$forceUpdate();
     },
-    getSearchResult(event: any) {
+    getSearchResult(event: any): void {
       this.isLoading = true;
       let lastIdQuery = '';
       this.isLoadMore = event.isLoadMore;
       if (event.lastId) {
         lastIdQuery = `&lastid=${event.lastId}`;
       }
-      axios({
+      
+      this.$axios({
         method: 'get',
-        url: `http://cherokeestreet.mynetgear.com:6432/search?s=${this.search_keyword}${event.lastId ? lastIdQuery : ''}`,
+        url: `search?s=${this.search_keyword}${event.lastId ? lastIdQuery : ''}`,
         headers: {}
-      }).then(response => {
+      }).then((response:any) => {
         this.isLoading = false;
         if (this.isLoadMore) {
           this.data.requestdata = response.data.requestdata;
           if (response.data.activities && response.data.activities.length) {
-            response.data.activities.forEach(item => {
+            response.data.activities.forEach((item :any) => {
               this.data.activities.push(item);
             });
           } else {
