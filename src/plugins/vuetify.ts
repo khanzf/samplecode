@@ -11,7 +11,7 @@ export default new Vuetify({
       dark: {
         primary: '#1976D2',
         secondary: '#424242',
-        accent: '#82B1FF',
+        accent: '#000000',
         error: '#FF5252',
         info: '#2196F3',
         success: '#4CAF50',
@@ -20,7 +20,7 @@ export default new Vuetify({
       light: {
         primary: '#1976D2',
         secondary: '#424242',
-        accent: '#82B1FF',
+        accent: '#EEEEEE',
         error: '#FF5252',
         info: '#2196F3',
         success: '#4CAF50',
@@ -29,4 +29,5 @@ export default new Vuetify({
     },
     options: {customProperties: true},
   },
-});
+})
+;

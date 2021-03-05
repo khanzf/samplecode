@@ -76,7 +76,7 @@
                     placeholder="Search the Fediverse"
                 >
                   <template v-slot:append-outer>
-                    <v-btn icon large text type="submit">
+                    <v-btn text type="submit">
                       <v-icon large color="white">mdi-magnify</v-icon>
                     </v-btn>
                   </template>
@@ -132,57 +132,55 @@
             <span v-if="items.activities" class="font-weight-bold">About
               {{ items.requestdata.total_results.toLocaleString() }} results</span>
             <div v-if="items.activities">
-              <v-list class="my-2" three-line v-if="items.activities.length">
-                <v-list-item-group>
-                  <!--            <v-skeleton-loader-->
-                  <!--                v-if="isLoading"-->
-                  <!--                v-bind="attrs"-->
-                  <!--                row="6"-->
-                  <!--                light-->
-                  <!--                type="list-item-avatar-three-line"-->
-                  <!--            ></v-skeleton-loader>-->
-                  <!--            v-if="!isLoading"-->
-                  <template v-for="(item, index) in items.activities">
-                    <v-list-item :key="item.title">
-                      <template>
-                        <v-list-item-avatar>
-                          <v-img v-if="item.actor && item.actor.icon && item.actor.icon.url" :src="item.actor.icon.url"
-                                 contain
-                                 transition="slide-y-transition"
-                                 lazy-src="@/assets/logo.png">
-                            <template v-slot:placeholder>
-                              <v-row
-                                  class="fill-height ma-0"
-                                  align="center"
-                                  justify="center"
-                              >
-                                <v-progress-circular
-                                    indeterminate
-                                    color="grey lighten-5"
-                                ></v-progress-circular>
-                              </v-row>
-                            </template>
-                          </v-img>
-                          <img v-else src="@/assets/noimage.png"/>
-                        </v-list-item-avatar>
-                        <v-list-item-content>
-                          <v-list-item-title>{{ item.actor.name }}
-                            <span>
+              <v-list class="my-2 search-list" three-line v-if="items.activities.length">
+                <!--            <v-skeleton-loader-->
+                <!--                v-if="isLoading"-->
+                <!--                v-bind="attrs"-->
+                <!--                row="6"-->
+                <!--                light-->
+                <!--                type="list-item-avatar-three-line"-->
+                <!--            ></v-skeleton-loader>-->
+                <!--            v-if="!isLoading"-->
+                <template v-for="(item, index) in items.activities">
+                  <v-list-item :key="item.title">
+                    <template>
+                      <v-list-item-avatar>
+                        <v-img v-if="item.actor && item.actor.icon && item.actor.icon.url" :src="item.actor.icon.url"
+                               contain
+                               transition="slide-y-transition"
+                               lazy-src="@/assets/logo.png">
+                          <template v-slot:placeholder>
+                            <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
+                            >
+                              <v-progress-circular
+                                  indeterminate
+                                  color="grey lighten-5"
+                              ></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                        <img v-else src="@/assets/noimage.png"/>
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <v-list-item-title>{{ item.actor.name }}
+                          <span>
                         <a :href="item.actor.id"> {{ item.actor.preferredUsername }}</a>
                       </span>
-                          </v-list-item-title>
-                          <v-list-item-subtitle
-                              v-html="item.content"
-                          ></v-list-item-subtitle>
-                        </v-list-item-content>
-                        <v-list-item-action>
-                          <v-list-item-action-text>{{ item.published  | timeAgo }}</v-list-item-action-text>
-                        </v-list-item-action>
-                      </template>
-                    </v-list-item>
-                    <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
-                  </template>
-                </v-list-item-group>
+                        </v-list-item-title>
+                        <v-list-item-subtitle
+                            v-html="item.content"
+                        ></v-list-item-subtitle>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-list-item-action-text>{{ item.published  | timeAgo }}</v-list-item-action-text>
+                      </v-list-item-action>
+                    </template>
+                  </v-list-item>
+                  <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
+                </template>
               </v-list>
             </div>
             <div v-else>
@@ -1028,17 +1026,17 @@ export default Vue.extend({
       if (event.lastId) {
         lastIdQuery = `&lastid=${event.lastId}`;
       }
-      
+
       this.$http({
         method: 'get',
         url: `search?s=${this.search_keyword}${event.lastId ? lastIdQuery : ''}`,
         headers: {}
-      }).then((response:any) => {
+      }).then((response: any) => {
         this.isLoading = false;
         if (this.isLoadMore) {
           this.data.requestdata = response.data.requestdata;
           if (response.data.activities && response.data.activities.length) {
-            response.data.activities.forEach((item :any) => {
+            response.data.activities.forEach((item: any) => {
               this.data.activities.push(item);
             });
           } else {
