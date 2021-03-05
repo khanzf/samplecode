@@ -8,7 +8,6 @@ import router from './router';
 import vuetify from './plugins/vuetify';
 
 import timeAgo from './filters/timeAgo';
-
 Vue.filter('timeAgo', timeAgo);
 
 Vue.use(VueRouter);
@@ -17,8 +16,16 @@ const axiosConfig = {
   baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 30000,
 };
+import { AxiosStatic } from 'axios';
 
-Vue.prototype.$axios = axios.create(axiosConfig);
+declare module 'vue/types/vue' {
+    interface Vue {
+        $http: AxiosStatic;
+    }
+}
+
+Vue.prototype.$http = axios.create(axiosConfig);
+
 new Vue({
   router,
   vuetify,

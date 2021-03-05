@@ -1029,7 +1029,7 @@ export default Vue.extend({
         lastIdQuery = `&lastid=${event.lastId}`;
       }
       
-      this.$axios({
+      this.$http({
         method: 'get',
         url: `search?s=${this.search_keyword}${event.lastId ? lastIdQuery : ''}`,
         headers: {}
