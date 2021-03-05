@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 /// user defined routes
 import router from './router';
-
+import '@mdi/font/css/materialdesignicons.css';
 import vuetify from './plugins/vuetify';
 
 import timeAgo from './filters/timeAgo';
