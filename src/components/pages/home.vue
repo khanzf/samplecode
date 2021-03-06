@@ -29,7 +29,7 @@
             </v-layout>
           </v-col>
         </v-row>
-        <v-flex xs12 class="search-div mx-auto" :class="isMobile() ? '': 'mt-5'">
+        <v-flex xs12 class="search-div mx-auto" :class="isMobile() ? '': 'mt-8'">
           <v-layout row wrap>
             <v-flex xs9 class="input-field">
               <v-text-field
@@ -38,12 +38,17 @@
                   required
                   name="keyword"
                   rounded
+                  large
+                  single-line
+                  hide-details
+                  autocomplete="off"
+                  solo
                   clearable
                   placeholder="Search the Fediverse"
               ></v-text-field>
             </v-flex>
             <v-flex xs3>
-              <v-btn type="submit" class="search-btn success">Search</v-btn>
+              <v-btn rounded type="submit" class="search-btn success">Search</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>

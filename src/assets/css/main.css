@@ -16,7 +16,6 @@ html {
 .search-div {
     display: flex;
     border-radius: 34px;
-    overflow: hidden;
     width: 100%;
 }
 
@@ -26,22 +25,15 @@ html {
     }
 }
 
-.theme--light .search-div .input-field {
-    background: #fff;
+.search-div .input-field .v-text-field--rounded {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-.search-div .input-field .v-text-field .v-input__control .v-input__slot .v-input__prepend-inner,
-.search-div .input-field .v-text-field .v-input__control .v-input__slot .v-input__append-inner {
-    padding-top: 4px;
+.search-div .search-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
-
-.search-div .input-field .v-text-field .v-input__control .v-input__slot .v-text-field__slot input {
-    padding-top: 15px;
-}
-
-/*.theme--dark .search-div .input-field {*/
-/*    background: #e0e0e0;*/
-/*}*/
 
 .search-btn {
     display: flex;
@@ -71,10 +63,6 @@ html {
     border-bottom-right-radius: 0px;
 }
 
-.search-keyword-field .v-input__control .v-input__slot {
-    /*min-height: 46.8px !important;*/
-}
-
 .search-keyword-field .v-input__control {
     margin-top: 1px;
 }
@@ -102,5 +90,4 @@ html {
 .search-list .v-list-item:hover {
     background-color: var(--v-accent-base);
 }
-
 

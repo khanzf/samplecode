@@ -1,68 +1,27 @@
 <template>
   <v-app>
-    <!--    <v-app-bar app>-->
-    <!--      <router-link to="/">-->
-    <!--        <div class="d-flex align-center">-->
-    <!--          <v-img-->
-    <!--              alt="Vuetify Logo"-->
-    <!--              class="shrink mr-2"-->
-    <!--              contain-->
-    <!--              src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"-->
-    <!--              transition="scale-transition"-->
-    <!--              width="40"-->
-    <!--          />-->
-
-    <!--          <v-img-->
-    <!--              alt="Vuetify Name"-->
-    <!--              class="shrink mt-1 hidden-sm-and-down"-->
-    <!--              contain-->
-    <!--              min-width="100"-->
-    <!--              src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"-->
-    <!--              width="100"-->
-    <!--          />-->
-    <!--        </div>-->
-    <!--      </router-link>-->
-    <!--      <v-spacer></v-spacer>-->
-    <!--    </v-app-bar>-->
-
     <v-main>
       <router-view/>
     </v-main>
     <v-footer app absolute>
       <v-card class="flex" outlined raised rounded>
-        <v-card-title class="pa-2 text-right">
-          <v-layout wrap class="mx-auto">
-            <v-flex xs12 class="text-center">
-              <v-img
-                  alt="Vuetify Name"
-                  contain
-                  height="35"
-                  src="./assets/logo_header.svg"
-              />
-            </v-flex>
-          </v-layout>
-
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-flex xs12>
-            <v-layout wrap row>
+        <v-card-text class="pa-2">
+            <v-layout wrap>
               <v-flex class="text-left">
-                <a class="pa-4">
+                <a class="pl-3">
                   Information
                 </a>
-                <a class="pa-4">
+                <a class="px-3">
                   Version
                 </a>
-                <a class="pa-4">
+                <a class="px-3">
                   Source
                 </a>
-                <a class="pa-4">
+                <a class="px-3">
                   Contact
                 </a>
               </v-flex>
             </v-layout>
-          </v-flex>
         </v-card-text>
       </v-card>
     </v-footer>
