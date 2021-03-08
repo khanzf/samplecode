@@ -38,7 +38,7 @@ export default Vue.extend({
     //
   }),
   methods: {
-    setTheme(check: Boolean): any {
+    setTheme(check: boolean): any {
       if (check) {
         localStorage.setItem('theme', 'dark');
       } else {
