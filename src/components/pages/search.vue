@@ -329,7 +329,7 @@ export default Vue.extend({
     isMobile() {
       if (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
+          navigator.userAgent,
         )
       ) {
         return true;
@@ -352,7 +352,7 @@ export default Vue.extend({
       let lastIdQuery = "";
       this.isLoadMore = event.isLoadMore;
       if (event.lastId) {
-        lastIdQuery = `&lastid=${event.lastId}`;
+        lastIdQuery = `&o=${event.lastId}`;
       }
 
       this.$http({
