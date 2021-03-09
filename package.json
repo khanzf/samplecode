@@ -6,13 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "node  server.js"
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "express": "^4.17.1",
     "moment": "^2.29.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.3",
