@@ -164,20 +164,18 @@
               }}
               results</span
             >
-            <div v-if="items.activities">
+            <v-skeleton-loader
+                v-if="isLoading"
+                v-bind="attrs"
+                row="6"
+                light
+                type="list-item-avatar-three-line"
+            ></v-skeleton-loader>
+            <div v-if="!isLoading">
               <v-list
                   class="my-2 search-list"
                   three-line
-                  v-if="items.activities.length"
-              >
-                <!--            <v-skeleton-loader-->
-                <!--                v-if="isLoading"-->
-                <!--                v-bind="attrs"-->
-                <!--                row="6"-->
-                <!--                light-->
-                <!--                type="list-item-avatar-three-line"-->
-                <!--            ></v-skeleton-loader>-->
-                <!--            v-if="!isLoading"-->
+                  v-if="items.activities && items.activities.length">
                 <template v-for="(item, index) in items.activities">
                   <v-list-item :key="item.title">
                     <template>
@@ -235,15 +233,15 @@
                       </v-list-item-action>
                     </template>
                   </v-list-item>
-                  <v-divider
-                      v-if="index < items.length - 1"
-                      :key="index"
-                  ></v-divider>
+                  <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
                 </template>
               </v-list>
-            </div>
-            <div v-else>
-              <h3>No results across the known fediverse.</h3>
+              <div v-else class="text-center pt-3 mt-2">
+                <v-img
+                    src="../../assets/no-result.png"></v-img>
+                <h3 class="font-weight-light black--text text-h5">No results across the known fediverse.</h3>
+              </div>
+
             </div>
             <div v-if="toggleMessage">
               <h3>No additional search results.</h3>
@@ -330,14 +328,16 @@ export default Vue.extend({
     },
     isLoadMore: false,
     isLoading: true,
-     data: {requestdata: [], activities: []},
+    data: {requestdata: [], activities: []},
     toggleMessage: false,
   }),
   computed: {
     items() {
-      this.data.activities.filter(item => {
-        item['isShowMore'] = false;
-      });
+      if (this.data.activities && this.data.activities.length) {
+        this.data.activities.filter(item => {
+          item['isShowMore'] = false;
+        });
+      }
       return this.data;
     },
     search_keyword() {
@@ -382,7 +382,7 @@ export default Vue.extend({
       this.$forceUpdate();
     },
     getSearchResult(event: any): void {
-      this.isLoading = true;
+      this.isLoading = !event.isLoadMore;
       let lastIdQuery = '';
       this.isLoadMore = event.isLoadMore;
       if (event.lastId) {
